@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Happy Anniversary My Love 💞</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+  body {
+    height: 100vh;
+    background: radial-gradient(circle at top left, #ffe6f0, #ffd6ff, #d9cfff);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #popup {
+    position: fixed; inset: 0;
+    background: linear-gradient(135deg, #ffd1dc, #ffe6f7);
+    display:flex; align-items:center; justify-content:center; z-index:200;
+    transition: opacity .8s ease;
+  }
+  #popup.hidden { opacity:0; pointer-events:none; }
+  #popup h1 { color:#ff4e8b; font-size:2.2rem; margin-bottom:18px; }
+  #popup button { 
+    background: linear-gradient(90deg,#ff8ac7,#ffb7d5); 
+    color:#fff; 
+    border:none; 
+    padding:12px 26px; 
+    border-radius:24px; 
+    cursor:pointer; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  #popup button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(255,100,150,0.4);
+  }
+  .container {
+    text-align:center;
+    color:#333;
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.22);
+    padding: 36px 48px;
+    border-radius: 24px;
+    box-shadow: 0 6px 40px rgba(0,0,0,0.08);
+    transition: all .45s ease;
+    opacity: 0; transform: scale(.96);
+  }
+  .container.visible { opacity: 1; transform: scale(1); }
+  h1.title { font-size: 2rem; color:#ff5ca8; margin-bottom:6px; }
+  p.subtitle { color:#444; margin-bottom:18px; }
+  .cake {
+    position: relative;
+    width: 170px; height: 110px;
+    margin: 26px auto;
+    background: linear-gradient(to bottom,#ffb7d5 20%, #ff94c2 100%);
+    border-radius:12px;
+    box-shadow: inset 0 2px 6px rgba(255,255,255,0.6), 0 6px 18px rgba(255,90,150,0.15);
+    overflow: visible;
+    transition: transform 0.2s;
+  }
+  .cake.wobble {
+    animation: cakeWobble 0.2s 3 ease-in-out;
+  }
+  @keyframes cakeWobble {
+    0%, 100% { transform: rotate(0deg); }
+    33% { transform: rotate(-1.5deg); }
+    66% { transform: rotate(1.5deg); }
+  }
+  .frosting {
+    position: absolute;
+    top: -14px;
+    left: 0; right: 0;
+    height: 34px;
+    background: #fff;
+    border-radius: 12px 12px 6px 6px;
+    z-index: 2;
+    box-shadow: 0 3px 10px rgba(255,255,255,0.8) inset;
+  }
+  .sprinkle { position:absolute; width:6px; height:3px; border-radius:2px; animation: twinkle 1.6s infinite ease-in-out; z-index:3; }
+  @keyframes twinkle { 0%,100%{opacity:.75} 50%{opacity:1; transform: rotate(45deg) scale(1.15);} }
+  .candle {
+    position: absolute;
+    top: -72px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px; height: 64px;
+    border-radius: 8px;
+    background: linear-gradient(180deg,#ffdfe8,#ffbcd6);
+    box-shadow: 0 8px 22px rgba(255,110,160,0.18);
+    z-index: 10;
+    display:flex; align-items:flex-start; justify-content:center;
+    transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+  }
+  .candle::before {
+    content:"";
+    position:absolute; inset:6px 0 6px 0;
+    background: repeating-linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.25) 6px, transparent 6px, transparent 12px);
+    border-radius:6px;
+    z-index:11;
+  }
+  .flame {
+    position: absolute;
+    top: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px; height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 45% 40%, #fff6b7 20%, #ffd24b 55%, #ff8f2b 95%);
+    box-shadow: 0 0 36px 12px rgba(255,200,80,0.95);
+    animation: flicker 160ms infinite alternate;
+    z-index: 12;
+  }
+  @keyframes flicker {
+    from { transform: translateX(-50%) scale(1); opacity:1; }
+    to { transform: translateX(-48%) scale(1.08); opacity:.92; }
+  }
+  .wick {
+    position: absolute;
+    top: -0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 6px;
+    background: #5a3d2b; 
+    border-radius: 1px;
+    z-index: 12;
+    opacity: 0; 
+    transition: opacity 0.3s ease;
+  }
+  .heart {
+    position: fixed; bottom: -28px; font-size: 20px; transform: rotate(45deg);
+    animation: floatUp 5s linear forwards;
+    z-index: 5;
+  }
+  @keyframes floatUp { 0%{transform:translateY(0) rotate(45deg) scale(.95); opacity:1} 100%{transform:translateY(-115vh) rotate(45deg) scale(1.35); opacity:0} }
+  .cinnamon {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin-top: 18px;
+    display: none;
+    z-index: 6;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  .cinnamon.clap {
+    display: flex;
+    animation: clap 0.6s infinite alternate;
+  }
+  @keyframes clap { 0%{transform:scale(1)} 100%{transform:scale(1.06)} }
+  button:focus { outline: none; box-shadow: 0 0 0 4px rgba(255,100,150,0.12); }
+  
+  /* New Confetti Styles */
+  .confetti {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;
+    overflow: hidden; z-index: 150;
+  }
+  .confetti-piece {
+    position: absolute;
+    width: 8px; height: 16px;
+    background: #ffc0cb;
+    opacity: 0;
+    animation: fall 3s ease-in forwards;
+  }
+  @keyframes fall {
+    0% { opacity: 1; transform: translateY(-10vh) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(105vh) rotate(720deg); }
+  }
+</style>
+</head>
+<body>
+  <div id="confettiContainer" class="confetti"></div>
+
+  <div id="popup">
+    <div style="text-align:center">
+      <h1>Tap to Start the Surprise 💞</h1>
+      <button id="startBtn">Start</button>
+    </div>
+  </div>
+
+  <div class="container" id="main">
+    <h1 class="title">Happy Anniversary — My Love</h1>
+    <p class="subtitle">You make my world sweeter every day</p>
+    <br><br><br><br>
+
+    <div class="cake" id="cake">
+      <div class="frosting" aria-hidden="true"></div>
+      <div class="candle" id="candle">
+        <div class="flame" id="flame"></div>
+        <div class="wick" id="wick"></div>
+      </div>
+      <div class="sprinkle" style="top:12px; left:18px; background:#ff8ac7;"></div>
+      <div class="sprinkle" style="top:8px; left:56px; background:#ffb347;"></div>
+      <div class="sprinkle" style="top:18px; left:94px; background:#98f5e1;"></div>
+      <div class="sprinkle" style="top:6px; left:126px; background:#a29bfe;"></div>
+      <div class="sprinkle" style="top:20px; left:76px; background:#f9ca24;"></div>
+    </div>
+
+    <h1 id="titleMsg" style="opacity:0; transform:translateY(6px); transition:all .5s ease">I love you endlessly 💖</h1>
+
+    <div class="cinnamon" id="cinnamon">
+      <!-- Replaced emoji with local Sanrio GIF -->
+      <img src="./gifs/sanrio.gif" alt="Sanrio Celebratory GIF" style="width: 100%; height: auto; border-radius: 12px;">
+    </div>
+  </div>
+
+  <audio id="bgm" loop preload="auto" src="./audio/music.mp3"></audio>
+  <script>
+    const popup = document.getElementById('popup');
+    const startBtn = document.getElementById('startBtn');
+    const main = document.getElementById('main');
+    const flame = document.getElementById('flame');
+    const wick = document.getElementById('wick');
+    const candle = document.getElementById('candle');
+    const titleMsg = document.getElementById('titleMsg');
+    const cinnamon = document.getElementById('cinnamon');
+    const bgm = document.getElementById('bgm');
+
+    let blown = false;
+    let heartInterval = null;
+
+    function createHeart() {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.style.left = (Math.random()*92 + 4) + 'vw';
+      h.style.fontSize = (14 + Math.random()*18) + 'px';
+      h.innerHTML = '💖';
+      document.body.appendChild(h);
+      setTimeout(()=> h.remove(), 5200);
+    }
+
+    function startHearts() {
+      if (heartInterval) return;
+      heartInterval = setInterval(createHeart, 360);
+    }
+
+    function createConfettiBurst() {
+      const container = document.getElementById('confettiContainer');
+      const colors = ['#ff8ac7', '#ffb347', '#98f5e1', '#a29bfe', '#f9ca24', '#fff'];
+      for (let i = 0; i < 50; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti-piece';
+        p.style.left = Math.random() * 100 + 'vw';
+        p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        p.style.width = (4 + Math.random() * 8) + 'px';
+        p.style.height = (4 + Math.random() * 12) + 'px';
+        p.style.animationDelay = Math.random() * 0.5 + 's';
+        p.style.animationDuration = (2 + Math.random() * 3) + 's';
+        container.appendChild(p);
+        setTimeout(() => p.remove(), 5000);
+      }
+    }
+
+    function loadAndShowGif(){
+      cinnamon.classList.add('clap');
+    }
+
+    async function initMic() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+        const src = audioCtx.createMediaStreamSource(stream);
+        const analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 128; 
+        src.connect(analyser);
+        const data = new Uint8Array(analyser.frequencyBinCount);
+        
+        let blowDetected = false;
+        function monitor(){
+          if (blowDetected) return; 
+          
+          analyser.getByteFrequencyData(data);
+          const avg = data.reduce((a,b)=>a+b,0)/data.length;
+          
+          if (avg > 30 && !blown) {
+            blowDetected = true; 
+            onBlow();
+            stream.getTracks().forEach(t=>t.stop());
+            return;
+          }
+          requestAnimationFrame(monitor);
+        }
+        monitor();
+      } catch (e) {
+        console.warn('mic blocked or unavailable', e);
+        document.getElementById('cake').addEventListener('click', onBlow, { once: true });
+      }
+    }
+
+    function onBlow(){
+      if (blown) return;
+      blown = true;
+      
+      // Extinguish Flame Animation
+      flame.style.transition = 'opacity .45s ease, transform .45s ease';
+      flame.style.opacity = 0;
+      flame.style.transform = 'translateY(-10px) scale(.6)';
+      
+      setTimeout(() => {
+        flame.style.display = 'none';
+        wick.style.opacity = 1; // Show the wick after flame disappears
+      }, 450); 
+
+      // Cake Wobble
+      document.getElementById('cake').classList.add('wobble');
+
+      // Smoke Effect
+      const smoke = document.createElement('div');
+      smoke.style.position = 'absolute';
+      smoke.style.top = '-30px';
+      smoke.style.left = '50%';
+      smoke.style.width = '8px';
+      smoke.style.height = '8px';
+      smoke.style.background = 'rgba(220, 220, 220, 0.6)';
+      smoke.style.borderRadius = '50%';
+      smoke.style.opacity = '0';
+      smoke.style.zIndex = '11';
+      smoke.style.transform = 'translateX(-50%) scale(0.5)';
+      smoke.style.transition = 'all 2s ease-out';
+      candle.appendChild(smoke);
+
+      setTimeout(() => {
+          smoke.style.opacity = '0.7';
+          smoke.style.transform = 'translateX(-60%) translateY(-30px) scale(2)';
+      }, 50);
+
+      setTimeout(() => {
+          smoke.style.opacity = '0';
+          smoke.style.transform = 'translateX(-70%) translateY(-40px) scale(2.5)';
+      }, 1000);
+      
+      setTimeout(() => {
+          smoke.remove();
+      }, 3000);
+      
+      // Surprises
+      createConfettiBurst();
+      titleMsg.style.opacity = 1;
+      titleMsg.style.transform = 'translateY(0)';
+      
+      // Second surprise: Delayed message change (a proposal!)
+      setTimeout(() => {
+        titleMsg.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+        titleMsg.style.color = '#ff4e8b';
+        titleMsg.style.fontSize = '2.5rem';
+        titleMsg.style.transform = 'scale(1.1)';
+      }, 1500);
+
+      loadAndShowGif();
+      startHearts();
+
+      bgm.muted = false;
+      bgm.volume = 0.0;
+      bgm.play().then(()=> {
+        let vol = 0.0;
+        const fade = setInterval(()=> {
+          vol = Math.min(0.6, vol + 0.06);
+          bgm.volume = vol;
+          if (vol >= 0.6) clearInterval(fade);
+        }, 120);
+      }).catch(()=>console.log('audio blocked'));
+    }
+
+    startBtn.addEventListener('click', ()=>{
+      popup.classList.add('hidden');
+      setTimeout(()=> popup.remove(), 700);
+      setTimeout(()=> main.classList.add('visible'), 450);
+      
+      initMic();
+    });
+  </script>
+</body>
+</html>
